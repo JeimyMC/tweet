@@ -3,15 +3,10 @@ const button = document.getElementById("enviar");
 const listOfTuits = document.querySelector(".person-tuits");
 const ul = document.createElement("ul");
 listOfTuits.appendChild(ul);
+const url = "https://randomuser.me/api/?results=1";
+let keep = [];
 
-function maketweet(
-  parametro1,
-  parametro2,
-  parametro3,
-  parametro4,
-  esteTexto,
-  id
-) {
+function maketweet(image, name, username, email, esteTexto, id) {
   const li = document.createElement("li");
   const h1 = document.createElement("h1");
   const p = document.createElement("p");
@@ -26,16 +21,14 @@ function maketweet(
   tuit.appendChild(buttonDelete).textContent = "x";
   buttonDelete.addEventListener("click", () => {
     keep.splice(compliteTuit.id, 1);
-    let changeKeep = keep;
-    keep = changeKeep;
     localStorage.setItem("keep", JSON.stringify(keep));
     tuit.remove();
   });
   const compliteTuit = {
-    img: (tuit.appendChild(img).src = parametro1),
-    h1: (tuit.appendChild(h1).textContent = parametro2),
-    p: (tuit.appendChild(p).textContent = parametro3),
-    footer: (tuit.appendChild(footer).textContent = parametro4),
+    img: (tuit.appendChild(img).src = image),
+    h1: (tuit.appendChild(h1).textContent = name),
+    p: (tuit.appendChild(p).textContent = username),
+    footer: (tuit.appendChild(footer).textContent = email),
     texto: (tuit.appendChild(texto).textContent = esteTexto),
     fecha: (tuit.appendChild(
       fecha
@@ -45,7 +38,6 @@ function maketweet(
   return compliteTuit;
 }
 
-let keep = [];
 window.onload = function () {
   const recuperar = JSON.parse(localStorage.getItem("keep"));
   if (recuperar) {
@@ -67,10 +59,8 @@ window.onload = function () {
 function keepTuit(tuit) {
   keep.push(tuit);
   localStorage.setItem("keep", JSON.stringify(keep));
-  console.log(keep);
 }
 
-const url = "https://randomuser.me/api/?results=1";
 function data(url) {
   return fetch(url).then((response) => response.json());
 }
@@ -90,7 +80,7 @@ async function getData(url, esteTexto) {
   );
 }
 
-async function list() {
+async function personTuit() {
   const guardar = written.value;
   if (guardar.length === 0) {
     alert("Está vacío");
@@ -103,4 +93,4 @@ async function list() {
   written.value = "";
 }
 
-button.addEventListener("click", list);
+button.addEventListener("click", personTuit);
