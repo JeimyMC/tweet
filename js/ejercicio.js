@@ -88,6 +88,7 @@ async function personTuit() {
     alert("No más de 200 caracteres");
   } else {
     const li = document.createElement("li");
+
     li.textContent = await getData(url, guardar);
   }
   written.value = "";
